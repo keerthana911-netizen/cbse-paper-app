@@ -50,54 +50,55 @@ class PaperViewScreen extends StatelessWidget {
     final difficultyColor = kDifficultyColors[difficulty] ?? Colors.grey;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F5FA),
+      backgroundColor: const Color(0xFFF6F3FB),
       appBar: AppBar(
-        title: Text(subject, style: const TextStyle(fontWeight: FontWeight.w700)),
+        title: Text(subject, style: const TextStyle(fontWeight: FontWeight.w800)),
         backgroundColor: subjectColor,
         foregroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(22.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Card(
-                elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                elevation: 3,
+                shadowColor: Colors.black26,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
                 child: Padding(
-                  padding: const EdgeInsets.all(22.0),
+                  padding: const EdgeInsets.all(24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: subjectColor.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(14),
                             ),
                             child: Icon(
                               subject == 'Math' ? Icons.calculate_rounded : Icons.menu_book_rounded,
                               color: subjectColor,
-                              size: 26,
+                              size: 30,
                             ),
                           ),
-                          const SizedBox(width: 14),
+                          const SizedBox(width: 16),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('$subject CA-1', style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 3),
-                                const Text('Chapters 1–3', style: TextStyle(color: Colors.grey, fontSize: 12.5)),
+                                Text('$subject CA-1', style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800)),
+                                const SizedBox(height: 4),
+                                const Text('Chapters 1–3', style: TextStyle(color: Colors.grey, fontSize: 13)),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 18),
+                      const SizedBox(height: 20),
                       Row(
                         children: [
                           _Badge(label: difficulty, color: difficultyColor),
@@ -105,30 +106,30 @@ class PaperViewScreen extends StatelessWidget {
                           _Badge(label: '$marks Marks', color: Colors.blueGrey),
                         ],
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 28),
                       SizedBox(
                         width: double.infinity,
                         child: FilledButton.icon(
-                          icon: const Icon(Icons.picture_as_pdf_rounded),
-                          label: const Text('Open / Download Question Paper'),
+                          icon: const Icon(Icons.picture_as_pdf_rounded, size: 22),
+                          label: const Text('View Question Paper', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
                           style: FilledButton.styleFrom(
                             backgroundColor: subjectColor,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            padding: const EdgeInsets.symmetric(vertical: 17),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                           ),
                           onPressed: () => _openUrl(context, _paperUrl),
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 14),
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton.icon(
-                          icon: Icon(Icons.key_rounded, color: subjectColor),
-                          label: Text('Open / Download Answer Key', style: TextStyle(color: subjectColor)),
+                          icon: Icon(Icons.key_rounded, color: subjectColor, size: 22),
+                          label: Text('View Answer Key', style: TextStyle(color: subjectColor, fontSize: 16, fontWeight: FontWeight.w700)),
                           style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            side: BorderSide(color: subjectColor, width: 1.4),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            padding: const EdgeInsets.symmetric(vertical: 17),
+                            side: BorderSide(color: subjectColor, width: 1.6),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                           ),
                           onPressed: () => _openUrl(context, _keyUrl),
                         ),
@@ -137,11 +138,18 @@ class PaperViewScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-              const Text(
-                'Both buttons open the PDF in your browser / device PDF viewer, '
-                'which has its own save or download option.',
-                style: TextStyle(fontSize: 12.5, color: Colors.grey),
+              const SizedBox(height: 18),
+              Row(
+                children: [
+                  const Icon(Icons.info_outline_rounded, size: 16, color: Colors.grey),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Opens in a new browser tab. Use the download icon inside the PDF viewer to save it.',
+                      style: TextStyle(fontSize: 12.5, color: Colors.grey.shade700),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -159,13 +167,13 @@ class _Badge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(999),
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 12.5, fontWeight: FontWeight.w700)),
+      child: Text(label, style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w800)),
     );
   }
 }
