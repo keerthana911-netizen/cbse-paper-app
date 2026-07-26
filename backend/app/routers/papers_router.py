@@ -7,7 +7,6 @@ from typing import List, Optional
 
 from ..database import get_db, FixedPaper
 from ..schemas import FixedPaperOut
-from ..auth import get_current_user
 
 router = APIRouter(prefix="/papers", tags=["papers"])
 
@@ -34,7 +33,7 @@ def list_papers(
 
 @router.get("/fixed/{subject}/{difficulty}/{marks}")
 def get_fixed_paper(subject: str, difficulty: str, marks: int, db: Session = Depends(get_db)):
-    """Serve the question paper PDF directly (no auth required, matches original spec)."""
+    """Serve the question paper PDF directly -- public, opens inline in the browser tab."""
     record = (
         db.query(FixedPaper)
         .filter(FixedPaper.subject == subject, FixedPaper.difficulty == difficulty, FixedPaper.marks == marks)
@@ -45,18 +44,17 @@ def get_fixed_paper(subject: str, difficulty: str, marks: int, db: Session = Dep
     path = os.path.join(STATIC_DIR, record.paper_filename)
     if not os.path.exists(path):
         raise HTTPException(status_code=404, detail="Paper file is missing on the server")
-    return FileResponse(path, media_type="application/pdf", filename=record.paper_filename)
+    return FileResponse(
+        path,
+        media_type="application/pdf",
+        filename=record.paper_filename,
+        content_disposition_type="inline",
+    )
 
 
 @router.get("/fixed/{subject}/{difficulty}/{marks}/key")
-def get_fixed_paper_key(
-    subject: str,
-    difficulty: str,
-    marks: int,
-    db: Session = Depends(get_db),
-    current_user=Depends(get_current_user),
-):
-    """Serve the answer key PDF -- requires login (teachers/students with an account)."""
+def get_fixed_paper_key(subject: str, difficulty: str, marks: int, db: Session = Depends(get_db)):
+    """Serve the answer key PDF directly -- public, same as the question paper. No login required."""
     record = (
         db.query(FixedPaper)
         .filter(FixedPaper.subject == subject, FixedPaper.difficulty == difficulty, FixedPaper.marks == marks)
@@ -67,4 +65,9 @@ def get_fixed_paper_key(
     path = os.path.join(STATIC_DIR, record.key_filename)
     if not os.path.exists(path):
         raise HTTPException(status_code=404, detail="Answer key file is missing on the server")
-    return FileResponse(path, media_type="application/pdf", filename=record.key_filename)
+    return FileResponse(
+        path,
+        media_type="application/pdf",
+        filename=record.key_filename,
+        content_disposition_type="inline",
+    )
