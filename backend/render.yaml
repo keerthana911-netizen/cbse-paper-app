@@ -2,6 +2,7 @@ services:
   - type: web
     name: cbse-paper-backend
     env: python
+    rootDir: backend
     buildCommand: "pip install -r requirements.txt && python -m app.seed"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
