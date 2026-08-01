@@ -16,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const subjects = [
     (label: 'Math', icon: Icons.calculate_rounded, color: Color(0xFF1F3D7A)),
     (label: 'English', icon: Icons.menu_book_rounded, color: Color(0xFF7A1F1F)),
+    (label: 'EVS', icon: Icons.eco_rounded, color: Color(0xFF2E7D32)),
+    (label: 'Hindi', icon: Icons.translate_rounded, color: Color(0xFFEF6C00)),
   ];
   static const difficulties = ['Easy', 'Medium', 'Hard'];
   static const difficultyColors = {
@@ -193,9 +195,9 @@ class _DashboardHeader extends StatelessWidget {
             spacing: 10,
             runSpacing: 8,
             children: const [
-              _StatChip(icon: Icons.category_rounded, label: '2 Subjects'),
+              _StatChip(icon: Icons.category_rounded, label: '4 Subjects'),
               _StatChip(icon: Icons.speed_rounded, label: '3 Difficulty Levels'),
-              _StatChip(icon: Icons.description_rounded, label: '18 Papers'),
+              _StatChip(icon: Icons.description_rounded, label: '36 Papers'),
             ],
           ),
         ],

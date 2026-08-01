@@ -14,6 +14,8 @@ from app.auth import hash_password
 SUBJECTS = {
     "Math": {"prefix": "Math_CA1"},
     "English": {"prefix": "English_CA1"},
+    "EVS": {"prefix": "EVS_CA1"},
+    "Hindi": {"prefix": "Hindi_CA1"},
 }
 DIFFICULTIES = ["Easy", "Medium", "Hard"]
 MARKS = [30, 50, 70]
@@ -55,7 +57,7 @@ def seed():
                     ))
                     added += 1
         db.commit()
-        print(f"Seeded {added} fixed-paper records (18 combinations expected: 2 subjects x 3 difficulties x 3 marks).")
+        print(f"Seeded {added} fixed-paper records (36 combinations expected: 4 subjects x 3 difficulties x 3 marks).")
 
         # -- Demo users --
         users_added = 0

@@ -17,6 +17,15 @@ const Map<String, Color> kDifficultyColors = {
 const Map<String, Color> kSubjectColors = {
   'Math': Color(0xFF1F3D7A),
   'English': Color(0xFF7A1F1F),
+  'EVS': Color(0xFF2E7D32),
+  'Hindi': Color(0xFFEF6C00),
+};
+
+const Map<String, IconData> kSubjectIcons = {
+  'Math': Icons.calculate_rounded,
+  'English': Icons.menu_book_rounded,
+  'EVS': Icons.eco_rounded,
+  'Hindi': Icons.translate_rounded,
 };
 
 class PaperViewScreen extends StatelessWidget {
@@ -80,7 +89,7 @@ class PaperViewScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(14),
                             ),
                             child: Icon(
-                              subject == 'Math' ? Icons.calculate_rounded : Icons.menu_book_rounded,
+                              kSubjectIcons[subject] ?? Icons.description_rounded,
                               color: subjectColor,
                               size: 30,
                             ),
