@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 /// For local testing:
 ///   Android emulator -> 'http://10.0.2.2:8000'
 ///   iOS simulator / Flutter web -> 'http://localhost:8000'
-const String kBackendBaseUrl = 'http://localhost:8000';
+const String kBackendBaseUrl = 'https://cbse-paper-backend.onrender.com';
 
 const Map<String, Color> kDifficultyColors = {
   'Easy': Color(0xFF2E7D32),
