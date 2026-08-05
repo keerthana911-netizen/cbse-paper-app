@@ -16,6 +16,7 @@ const Map<String, Color> kDifficultyColors = {
 
 const Map<String, Color> kSubjectColors = {
   'Math': Color(0xFF1F3D7A),
+  'Maths': Color(0xFF1F3D7A),
   'English': Color(0xFF7A1F1F),
   'EVS': Color(0xFF2E7D32),
   'Hindi': Color(0xFFEF6C00),
@@ -23,25 +24,30 @@ const Map<String, Color> kSubjectColors = {
 
 const Map<String, IconData> kSubjectIcons = {
   'Math': Icons.calculate_rounded,
+  'Maths': Icons.calculate_rounded,
   'English': Icons.menu_book_rounded,
   'EVS': Icons.eco_rounded,
   'Hindi': Icons.translate_rounded,
 };
 
 class PaperViewScreen extends StatelessWidget {
-  final String subject;
+  final String subject; // display label, e.g. "Maths"
+  final String apiSubject; // key used in the backend URL, e.g. "Class3_Maths"
+  final int classLevel;
   final String difficulty;
   final int marks;
 
   const PaperViewScreen({
     super.key,
     required this.subject,
+    String? apiSubject,
+    this.classLevel = 5,
     required this.difficulty,
     required this.marks,
-  });
+  }) : apiSubject = apiSubject ?? subject;
 
-  String get _paperUrl => '$kBackendBaseUrl/papers/fixed/$subject/$difficulty/$marks';
-  String get _keyUrl => '$kBackendBaseUrl/papers/fixed/$subject/$difficulty/$marks/key';
+  String get _paperUrl => '$kBackendBaseUrl/papers/fixed/$apiSubject/$difficulty/$marks';
+  String get _keyUrl => '$kBackendBaseUrl/papers/fixed/$apiSubject/$difficulty/$marks/key';
 
   Future<void> _openUrl(BuildContext context, String url) async {
     final uri = Uri.parse(url);

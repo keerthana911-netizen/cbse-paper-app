@@ -16,6 +16,14 @@ SUBJECTS = {
     "English": {"prefix": "English_CA1"},
     "EVS": {"prefix": "EVS_CA1"},
     "Hindi": {"prefix": "Hindi_CA1"},
+    "Class3_Maths": {"prefix": "Class3_Maths_CA1"},
+    "Class3_English": {"prefix": "Class3_English_CA1"},
+    "Class3_Hindi": {"prefix": "Class3_Hindi_CA1"},
+    "Class3_EVS": {"prefix": "Class3_EVS_CA1"},
+    "Class4_Maths": {"prefix": "Class4_Maths_CA1"},
+    "Class4_English": {"prefix": "Class4_English_CA1"},
+    "Class4_Hindi": {"prefix": "Class4_Hindi_CA1"},
+    "Class4_EVS": {"prefix": "Class4_EVS_CA1"},
 }
 DIFFICULTIES = ["Easy", "Medium", "Hard"]
 MARKS = [30, 50, 70]
@@ -57,7 +65,7 @@ def seed():
                     ))
                     added += 1
         db.commit()
-        print(f"Seeded {added} fixed-paper records (36 combinations expected: 4 subjects x 3 difficulties x 3 marks).")
+        print(f"Seeded {added} fixed-paper records (108 combinations expected: 12 subject-entries x 3 difficulties x 3 marks).")
 
         # -- Demo users --
         users_added = 0

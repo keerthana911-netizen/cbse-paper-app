@@ -9,16 +9,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _classLevel = 5;
   String _subject = 'Math';
   String _difficulty = 'Easy';
   int _marks = 30;
 
-  static const subjects = [
-    (label: 'Math', icon: Icons.calculate_rounded, color: Color(0xFF1F3D7A)),
-    (label: 'English', icon: Icons.menu_book_rounded, color: Color(0xFF7A1F1F)),
-    (label: 'EVS', icon: Icons.eco_rounded, color: Color(0xFF2E7D32)),
-    (label: 'Hindi', icon: Icons.translate_rounded, color: Color(0xFFEF6C00)),
-  ];
+  static const classLevels = [5, 4, 3];
+
+  static const subjectsByClass = {
+    5: [
+      (label: 'Math', apiKey: 'Math', icon: Icons.calculate_rounded, color: Color(0xFF1F3D7A)),
+      (label: 'English', apiKey: 'English', icon: Icons.menu_book_rounded, color: Color(0xFF7A1F1F)),
+      (label: 'EVS', apiKey: 'EVS', icon: Icons.eco_rounded, color: Color(0xFF2E7D32)),
+      (label: 'Hindi', apiKey: 'Hindi', icon: Icons.translate_rounded, color: Color(0xFFEF6C00)),
+    ],
+    4: [
+      (label: 'Maths', apiKey: 'Class4_Maths', icon: Icons.calculate_rounded, color: Color(0xFF1F3D7A)),
+      (label: 'English', apiKey: 'Class4_English', icon: Icons.menu_book_rounded, color: Color(0xFF7A1F1F)),
+      (label: 'EVS', apiKey: 'Class4_EVS', icon: Icons.eco_rounded, color: Color(0xFF2E7D32)),
+      (label: 'Hindi', apiKey: 'Class4_Hindi', icon: Icons.translate_rounded, color: Color(0xFFEF6C00)),
+    ],
+    3: [
+      (label: 'Maths', apiKey: 'Class3_Maths', icon: Icons.calculate_rounded, color: Color(0xFF1F3D7A)),
+      (label: 'English', apiKey: 'Class3_English', icon: Icons.menu_book_rounded, color: Color(0xFF7A1F1F)),
+      (label: 'EVS', apiKey: 'Class3_EVS', icon: Icons.eco_rounded, color: Color(0xFF2E7D32)),
+      (label: 'Hindi', apiKey: 'Class3_Hindi', icon: Icons.translate_rounded, color: Color(0xFFEF6C00)),
+    ],
+  };
+
+  List<({String label, String apiKey, IconData icon, Color color})> get subjects =>
+      subjectsByClass[_classLevel]!;
   static const difficulties = ['Easy', 'Medium', 'Hard'];
   static const difficultyColors = {
     'Easy': Color(0xFF2E7D32),
@@ -62,6 +82,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(width: 8),
                             Text('Choose a paper', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
                           ],
+                        ),
+                        const SizedBox(height: 26),
+
+                        const _SectionLabel('Class'),
+                        const SizedBox(height: 12),
+                        Wrap(
+                          spacing: 12,
+                          runSpacing: 10,
+                          children: classLevels.map((c) {
+                            final isSelected = c == _classLevel;
+                            return _BigChip(
+                              label: 'Class $c',
+                              selected: isSelected,
+                              color: Colors.indigo,
+                              onTap: () => setState(() {
+                                _classLevel = c;
+                                _subject = subjectsByClass[c]!.first.label;
+                              }),
+                            );
+                          }).toList(),
                         ),
                         const SizedBox(height: 26),
 
@@ -131,7 +171,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) =>
-                                    PaperViewScreen(subject: _subject, difficulty: _difficulty, marks: _marks),
+                                    PaperViewScreen(
+                                      subject: _subject,
+                                      apiSubject: subjectMeta.apiKey,
+                                      classLevel: _classLevel,
+                                      difficulty: _difficulty,
+                                      marks: _marks,
+                                    ),
                               ));
                             },
                           ),
@@ -187,7 +233,7 @@ class _DashboardHeader extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Class 5 · CBSE / NCERT · Chapters 1–3',
+            'Classes 3–5 · CBSE / NCERT · Chapters 1–3',
             style: TextStyle(color: Colors.white70, fontSize: 14.5),
           ),
           const SizedBox(height: 22),
@@ -195,9 +241,9 @@ class _DashboardHeader extends StatelessWidget {
             spacing: 10,
             runSpacing: 8,
             children: const [
-              _StatChip(icon: Icons.category_rounded, label: '4 Subjects'),
+              _StatChip(icon: Icons.school_rounded, label: '3 Classes'),
               _StatChip(icon: Icons.speed_rounded, label: '3 Difficulty Levels'),
-              _StatChip(icon: Icons.description_rounded, label: '36 Papers'),
+              _StatChip(icon: Icons.description_rounded, label: '216 Papers'),
             ],
           ),
         ],
